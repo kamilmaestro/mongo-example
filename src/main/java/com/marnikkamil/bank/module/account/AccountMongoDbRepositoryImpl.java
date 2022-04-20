@@ -5,6 +5,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-interface AccountMongoDbRepositoryImpl extends MongoRepository<AccountMongoEntity, ObjectId> {
+interface AccountMongoDbRepositoryImpl extends MongoRepository<AccountMongoDocument, ObjectId> {
 
 }

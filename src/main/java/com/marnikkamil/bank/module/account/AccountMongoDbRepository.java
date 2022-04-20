@@ -14,8 +14,8 @@ class AccountMongoDbRepository implements AccountRepository {
 
   @Override
   public Account save(Account account) {
-    final AccountMongoEntity accountMongoEntity = accountRepository
-        .save(new AccountMongoEntity(account.getAccountName()));
+    final AccountMongoDocument accountMongoEntity = accountRepository
+        .save(new AccountMongoDocument(account.getAccountName()));
 
     return new Account(accountMongoEntity.getId().toString(), accountMongoEntity.getName());
   }

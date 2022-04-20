@@ -1,14 +1,15 @@
 package com.marnikkamil.bank.module.account;
 
 import com.marnikkamil.bank.infrastructure.account.AccountDto;
-import org.bson.types.ObjectId;
 
-import java.util.UUID;
+import java.util.HashSet;
+import java.util.Set;
 
 final class Account {
 
   private String id;
   private final String accountName;
+  private final Set<Share> shares = new HashSet<>();
 
   Account(String accountName) {
     this.accountName = accountName;
