@@ -1,4 +1,4 @@
-package com.marnikkamil.bank;
+package com.marnikkamil;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
