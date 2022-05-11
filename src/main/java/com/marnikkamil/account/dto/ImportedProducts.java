@@ -2,10 +2,12 @@ package com.marnikkamil.account.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.Collection;
 
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
 public final class ImportedProducts {
   Collection<ProductCategoryDto> productCategories;

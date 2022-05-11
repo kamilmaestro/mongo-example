@@ -1,5 +1,8 @@
 package com.marnikkamil.account.domain;
 
+import lombok.Getter;
+
+@Getter
 final class Product {
 
   private String id;
@@ -18,22 +21,6 @@ final class Product {
     this.name = name;
     this.amount = amount;
     this.price = price;
-  }
-
-  public String getId() {
-    return id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public Integer getAmount() {
-    return amount;
-  }
-
-  public double getPrice() {
-    return price;
   }
 
 }

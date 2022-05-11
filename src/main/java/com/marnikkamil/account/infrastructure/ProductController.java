@@ -3,9 +3,6 @@ package com.marnikkamil.account.infrastructure;
 import com.marnikkamil.account.domain.ProductFacade;
 import com.marnikkamil.account.dto.ImportedProducts;
 import com.marnikkamil.account.dto.ProductDto;
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collection;
+
 @RestController
-@RequestMapping("/account")
+@RequestMapping("/product")
 final class ProductController {
 
   private final ProductFacade productFacade;
@@ -25,8 +24,8 @@ final class ProductController {
   }
 
   @PostMapping("/")
-  public ResponseEntity<ProductDto> importProducts(@RequestBody ImportedProducts products) {
-    final ProductDto product = productFacade.importProducts(products);
+  public ResponseEntity<Collection<ProductDto>> importProducts(@RequestBody ImportedProducts products) {
+    final Collection<ProductDto> product = productFacade.importProducts(products);
     return ResponseEntity.ok(product);
   }
 

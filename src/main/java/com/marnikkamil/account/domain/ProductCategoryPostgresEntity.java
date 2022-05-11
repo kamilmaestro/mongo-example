@@ -1,36 +1,43 @@
 package com.marnikkamil.account.domain;
 
 import lombok.Getter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Set;
+import java.util.UUID;
 
 @Getter
+@Entity
 @Table(name = "product_category")
 class ProductCategoryPostgresEntity {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private String id;
+  @GenericGenerator(name = "uuid2", strategy = "uuid2")
+  @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
+  private UUID id;
   private String name;
-  @OneToMany
-  @JoinColumn(name = "category_id", referencedColumnName = "id")
+  @OneToMany(cascade = CascadeType.ALL)
+  @JoinColumn(name = "product_category_id")
   private Set<ProductPostgresEntity> products;
 
   private ProductCategoryPostgresEntity() {
   }
 
-  ProductCategoryPostgresEntity(String name, Set<ProductPostgresEntity> products) {
+  ProductCategoryPostgresEntity(UUID id, String name, Set<ProductPostgresEntity> products) {
+    this.id = id;
     this.name = name;
     this.products = products;
   }
 
   @Getter
+  @Entity
+  @Table(name = "product")
   static class ProductPostgresEntity {
 
-    private String id;
-    @Column(name = "category_id")
-    private String categoryId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
     private Integer amount;
     private double price;

@@ -1,0 +1,32 @@
+{
+  "productCategories" :
+  [
+    {
+      "name": "Kategoria1",
+      "products":
+      [
+        {
+          "name": "Mleko",
+          "amount": 2,
+          "price": 5
+        },
+        {
+          "name": "Ser",
+          "amount": 7,
+          "price": 25
+        }
+      ]
+    },
+    {
+      "name": "Kategoria2",
+      "products":
+      [
+        {
+          "name": "Plastik",
+          "amount": 35,
+          "price": 888
+        }
+      ]
+    }
+  ]
+}
