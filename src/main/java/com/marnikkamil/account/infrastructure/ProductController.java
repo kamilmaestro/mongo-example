@@ -2,7 +2,9 @@ package com.marnikkamil.account.infrastructure;
 
 import com.marnikkamil.account.domain.ProductFacade;
 import com.marnikkamil.account.dto.ImportedProducts;
+import com.marnikkamil.account.dto.ProductCategoryDto;
 import com.marnikkamil.account.dto.ProductDto;
+import com.marnikkamil.account.dto.SearchProductsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,8 +26,14 @@ final class ProductController {
   }
 
   @PostMapping("/")
-  public ResponseEntity<Collection<ProductDto>> importProducts(@RequestBody ImportedProducts products) {
-    final Collection<ProductDto> product = productFacade.importProducts(products);
+  public ResponseEntity<Collection<ProductCategoryDto>> importProducts(@RequestBody ImportedProducts products) {
+    final Collection<ProductCategoryDto> product = productFacade.importProducts(products);
+    return ResponseEntity.ok(product);
+  }
+
+  @PostMapping("/search/")
+  public ResponseEntity<Collection<ProductDto>> search(@RequestBody SearchProductsDto products) {
+    final Collection<ProductDto> product = productFacade.searchProducts(products);
     return ResponseEntity.ok(product);
   }
 

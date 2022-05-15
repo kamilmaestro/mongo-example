@@ -1,7 +1,7 @@
 package com.marnikkamil.account.domain;
 
 import com.marnikkamil.account.dto.ImportedProducts;
-import com.marnikkamil.account.dto.ProductDto;
+import com.marnikkamil.account.dto.ProductCategoryDto;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -32,8 +32,8 @@ final class ProductCategory {
         .collect(Collectors.toSet());
   }
 
-  ProductDto dto() {
-    return ProductDto.builder()
+  ProductCategoryDto dto() {
+    return ProductCategoryDto.builder()
         .id(id)
         .accountName(categoryName)
         .build();

@@ -1,5 +1,6 @@
 package com.marnikkamil.account.domain;
 
+import com.marnikkamil.account.dto.ProductDto;
 import lombok.Getter;
 
 @Getter
@@ -21,6 +22,10 @@ final class Product {
     this.name = name;
     this.amount = amount;
     this.price = price;
+  }
+
+  ProductDto dto() {
+    return new ProductDto(id, name, amount, price);
   }
 
 }

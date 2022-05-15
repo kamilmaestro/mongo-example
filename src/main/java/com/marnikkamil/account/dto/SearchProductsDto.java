@@ -5,12 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
-public final class ProductDto {
+public final class SearchProductsDto {
 
-  String id;
-  String name;
-  Integer amount;
-  double price;
+  String text;
+  double minPrice;
+  double maxPrice;
 
 }
