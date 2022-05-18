@@ -35,9 +35,13 @@ class ProductCategoryPostgresEntity {
   @Table(name = "product")
   static class ProductPostgresEntity {
 
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
+    private UUID id;
     private String name;
     private Integer amount;
     private double price;

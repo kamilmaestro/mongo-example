@@ -18,6 +18,9 @@ class ProductPostgresRepository implements ProductRepository {
   @Autowired
   ProductPostgresConnection dbConnection;
 
+  @Autowired
+  ProductPostgresConnectionEnt dbConnection2;
+
   @Override
   public ProductCategory save(ProductCategory productCategory) {
     final UUID categoryId = UUID.randomUUID();
@@ -27,13 +30,15 @@ class ProductPostgresRepository implements ProductRepository {
 
   @Override
   public Collection<Product> search(SearchProductsDto searchProducts) {
-    final Collection<ProductCategoryPostgresEntity> search = dbConnection
-        .search(searchProducts.getText(), searchProducts.getMinPrice(), searchProducts.getMaxPrice());
-
-    return search.stream()
-        .map(category -> category.getProducts().stream().map(this::productToDomain).collect(Collectors.toList()))
-        .flatMap(Collection::stream)
-        .collect(Collectors.toList());
+//    final Collection<ProductCategoryPostgresEntity> search = dbConnection
+//        .search(searchProducts.getText(), searchProducts.getMinPrice(), searchProducts.getMaxPrice()).stream().distinct().collect(Collectors.toList());
+    final Collection<ProductCategoryPostgresEntity.ProductPostgresEntity> search2 = dbConnection
+        .searchProducts(searchProducts.getText(), searchProducts.getMinPrice(), searchProducts.getMaxPrice()).stream().distinct().collect(Collectors.toList());
+    return Collections.emptyList();
+//    return search.stream()
+//        .map(category -> category.getProducts().stream().map(this::productToDomain).collect(Collectors.toList()))
+//        .flatMap(Collection::stream)
+//        .collect(Collectors.toList());
   }
 
   private Product productToDomain(ProductCategoryPostgresEntity.ProductPostgresEntity product) {
