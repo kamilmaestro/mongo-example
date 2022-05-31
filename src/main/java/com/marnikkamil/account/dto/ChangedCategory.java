@@ -5,11 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
-public final class ProductDto {
+public final class ChangedCategory {
 
-  String name;
-  Integer amount;
-  double price;
+  String oldCategoryId;
+  String newCategoryId;
 
 }

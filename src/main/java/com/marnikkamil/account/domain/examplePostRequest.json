@@ -2,29 +2,23 @@
   "productCategories" :
   [
     {
-      "name": "Kategoria1",
+      "name": "Artykuły szkolne",
       "products":
       [
         {
-          "name": "Mleko",
-          "amount": 2,
-          "price": 5
+          "name": "Ołówek",
+          "amount": 31,
+          "price": 1.99
         },
         {
-          "name": "Ser",
-          "amount": 7,
-          "price": 25
-        }
-      ]
-    },
-    {
-      "name": "Kategoria2",
-      "products":
-      [
+          "name": "Długopis",
+          "amount": 56,
+          "price": 4.99
+        },
         {
-          "name": "Plastik",
-          "amount": 35,
-          "price": 888
+          "name": "Zeszyt",
+          "amount": 7,
+          "price": 2.59
         }
       ]
     }

@@ -5,9 +5,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.UUID;
 
 @Repository
-interface ProductPostgresConnection extends JpaRepository<ProductCategoryPostgresEntity, String> {
+interface ProductPostgresConnection extends JpaRepository<ProductCategoryPostgresEntity, UUID> {
 
 //  @Query(value = "SELECT c FROM ProductCategoryPostgresEntity c " +
 //      "INNER JOIN FETCH ProductCategoryPostgresEntity.ProductPostgresEntity p ON c.id = p.productCategoryId " +
@@ -18,7 +19,7 @@ interface ProductPostgresConnection extends JpaRepository<ProductCategoryPostgre
 
   @Query(value = "SELECT * FROM product p " +
       "WHERE p.name LIKE('%lastik%') AND p.price >= 888 AND p.price <= 889", nativeQuery = true)
-  Collection<ProductCategoryPostgresEntity.ProductPostgresEntity> searchProducts(String text, double minPrice, double maxPrice);
+  Collection<ProductPostgresEntity> searchProducts(String text, double minPrice, double maxPrice);
 
 //  @Query(value = "SELECT p FROM product_category c INNER JOIN product p ON c.id = p.product_category_id " +
 //      "WHERE p.name LIKE('%lastik%') AND p.price >= 888 AND p.price <= 889", nativeQuery = true)

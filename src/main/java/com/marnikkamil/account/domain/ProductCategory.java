@@ -32,6 +32,17 @@ final class ProductCategory {
         .collect(Collectors.toSet());
   }
 
+  Set<Product> moveProducts() {
+    final Set<Product> toMove = new HashSet<>(this.products);
+    this.products.clear();
+
+    return toMove;
+  }
+
+  void addProducts(Set<Product> products) {
+    this.products.addAll(products);
+  }
+
   ProductCategoryDto dto() {
     return ProductCategoryDto.builder()
         .id(id)

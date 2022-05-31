@@ -1,14 +1,12 @@
 package com.marnikkamil.account.domain;
 
-import com.marnikkamil.account.dto.ImportedProducts;
-import com.marnikkamil.account.dto.ProductCategoryDto;
-import com.marnikkamil.account.dto.ProductDto;
-import com.marnikkamil.account.dto.SearchProductsDto;
+import com.marnikkamil.account.dto.*;
 import lombok.AllArgsConstructor;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -32,6 +30,16 @@ public final class ProductFacade {
     return search.stream()
         .map(Product::dto)
         .collect(Collectors.toList());
+  }
+
+  public ProductCategoryDto changeCategoryForProducts(ChangedCategory changedCategory) {
+    final ProductCategory oldCategory = productRepository.findById(changedCategory.getOldCategoryId());
+    final ProductCategory newCategory = productRepository.findById(changedCategory.getNewCategoryId());
+    final Set<Product> products = oldCategory.moveProducts();
+    newCategory.addProducts(products);
+    productRepository.save(oldCategory);
+
+    return productRepository.save(newCategory).dto();
   }
 
 }

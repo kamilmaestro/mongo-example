@@ -1,12 +1,13 @@
 package com.marnikkamil.account.domain;
 
 import com.marnikkamil.account.dto.SearchProductsDto;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -16,41 +17,42 @@ import java.util.stream.Collectors;
 class ProductPostgresRepository implements ProductRepository {
 
   @Autowired
-  ProductPostgresConnection dbConnection;
-
+  ProductPostgresConnection productCategoryDbConnection;
   @Autowired
-  ProductPostgresConnectionEnt dbConnection2;
+  ProductPostgresConnectionEnt productDbConnection;
 
   @Override
   public ProductCategory save(ProductCategory productCategory) {
-    final UUID categoryId = UUID.randomUUID();
-    final ProductCategoryPostgresEntity categoryPostgresEntity = dbConnection.save(convertToEntity(productCategory, categoryId));
+    final ProductCategoryPostgresEntity categoryPostgresEntity = productCategoryDbConnection.save(convertToEntity(productCategory));
     return toDomain(categoryPostgresEntity);
   }
 
   @Override
-  public Collection<Product> search(SearchProductsDto searchProducts) {
-//    final Collection<ProductCategoryPostgresEntity> search = dbConnection
-//        .search(searchProducts.getText(), searchProducts.getMinPrice(), searchProducts.getMaxPrice()).stream().distinct().collect(Collectors.toList());
-    final Collection<ProductCategoryPostgresEntity.ProductPostgresEntity> search2 = dbConnection
-        .searchProducts(searchProducts.getText(), searchProducts.getMinPrice(), searchProducts.getMaxPrice()).stream().distinct().collect(Collectors.toList());
-    return Collections.emptyList();
-//    return search.stream()
-//        .map(category -> category.getProducts().stream().map(this::productToDomain).collect(Collectors.toList()))
-//        .flatMap(Collection::stream)
-//        .collect(Collectors.toList());
+  public ProductCategory findById(String id) {
+    final UUID uuid = UUID.fromString(id);
+    return productCategoryDbConnection.findById(uuid)
+        .map(this::toDomain)
+        .orElseThrow(EntityNotFoundException::new);
   }
 
-  private Product productToDomain(ProductCategoryPostgresEntity.ProductPostgresEntity product) {
+
+  @Override
+  public Collection<Product> search(SearchProductsDto searchProducts) {
+    final Collection<ProductPostgresEntity> search2 = productDbConnection
+        .searchProducts(searchProducts.getText(), searchProducts.getMinPrice(), searchProducts.getMaxPrice()).stream().distinct().collect(Collectors.toList());
+    return search2.stream().map(this::productToDomain).collect(Collectors.toList());
+  }
+
+  private Product productToDomain(ProductPostgresEntity product) {
     return new Product(product.getId().toString(), product.getName(), product.getAmount(), product.getPrice());
   }
 
-  private ProductCategoryPostgresEntity convertToEntity(ProductCategory productCategory, UUID categoryId) {
-    final Set<ProductCategoryPostgresEntity.ProductPostgresEntity> products = productCategory.getProducts().stream()
-        .map(product -> new ProductCategoryPostgresEntity.ProductPostgresEntity(product.getName(), product.getAmount(), product.getPrice()))
+  private ProductCategoryPostgresEntity convertToEntity(ProductCategory productCategory) {
+    final Set<ProductPostgresEntity> products = productCategory.getProducts().stream()
+        .map(product -> new ProductPostgresEntity(product.getName(), product.getAmount(), product.getPrice()))
         .collect(Collectors.toSet());
 
-    return new ProductCategoryPostgresEntity(categoryId, productCategory.getCategoryName(), products);
+    return new ProductCategoryPostgresEntity(productCategory.getCategoryName(), products);
   }
 
   private ProductCategory toDomain(ProductCategoryPostgresEntity entity) {

@@ -25,7 +25,7 @@ final class Product {
   }
 
   ProductDto dto() {
-    return new ProductDto(id, name, amount, price);
+    return new ProductDto(name, amount, price);
   }
 
 }

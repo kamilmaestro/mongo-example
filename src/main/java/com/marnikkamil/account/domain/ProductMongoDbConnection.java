@@ -10,7 +10,7 @@ import java.util.Collection;
 @Repository
 interface ProductMongoDbConnection extends MongoRepository<ProductCategoryMongoDocument, ObjectId> {
 
-  @Query(value = "{ \"products.name\" : /lastik/, \"products.price\": { $gte: 888}, \"products.price\": { $lte: 889} }")
+  @Query(value = "{ \"products.name\" : /Mle/, \"products.price\": { $gte: 1}, \"products.price\": { $lte: 100} }")
   Collection<ProductCategoryMongoDocument> search(String text, double minPrice, double maxPrice);
 
 }
